@@ -1,0 +1,30 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+metadata:
+  name: eks-demo
+  region: us-west-2
+availabilityZones:
+- us-west-2a
+- us-west-2b
+managedNodeGroups:
+- name: eks-demo-ng
+  amiFamily: AmazonLinux2
+  instanceType: t3.micro
+  desiredCapacity: 2
+  minSize: 2
+  maxSize: 4
+  volumeSize: 20
+  ssh:
+    allow: true
+    publicKeyName: login-keypair
+  privateNetworking: true
+  tags: {
+    Name: "eks-demo-ng-instance"}
+  iam:
+    withAddonPolicies:
+      imageBuilder: true
+      autoScaler: true
+      appMesh: true
+      externalDNS: true
+      awsLoadBalancerController: true
+
