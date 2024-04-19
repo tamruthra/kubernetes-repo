@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-recreate-deploy
+  labels:
+    app: re-app-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: re-app-pod
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      name: re-app-deploy-template
+      labels:
+        app: re-app-pod
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx
+        ports:
+        - containerPort: 80

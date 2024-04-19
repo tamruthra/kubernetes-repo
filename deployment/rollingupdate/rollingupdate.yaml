@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: testing-deploy
+  labels:
+    app: testing-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-pods
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      name: app-pod-deploy
+      labels:
+        app: app-pods
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx
+        ports:
+        - containerPort: 80
